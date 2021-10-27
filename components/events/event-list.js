@@ -5,7 +5,14 @@ function EventList(props) {
 	return (
 		<ul>
 			{items.map((event) => (
-				<EventItem />
+				<EventItem
+					id={event.id}
+					title={event.title}
+					location={event.location}
+					date={event.date}
+					image={event.image}
+					key={event.id}
+				/>
 			))}
 		</ul>
 	);
