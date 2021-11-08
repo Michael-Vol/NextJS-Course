@@ -21,7 +21,7 @@ function FilteredEventsPage(props) {
 
 	// const numYear = +filteredYear;
 	// const numMonth = +filteredMonth;
-	// console.log(props);
+
 	if (props.hasError) {
 		return (
 			<Fragment>
