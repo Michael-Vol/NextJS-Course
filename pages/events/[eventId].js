@@ -21,8 +21,8 @@ function EventDetailPage(props) {
 	return (
 		<Fragment>
 			<Head>
-				<title>All Events</title>
-				<meta name='description' content='Find a lot of great events that allow you to evolve' />
+				<title>{event.title}</title>
+				<meta name='description' content={event.description} />
 			</Head>
 			<EventSummary title={event.title} />
 			<EventLogistics date={event.date} address={event.location} image={event.image} imageAlt={event.title} />
