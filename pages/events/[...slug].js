@@ -34,7 +34,7 @@ function FilteredEventsPage(props) {
 
 	let pageHeadData = (
 		<Head>
-			<title>Filtered Events</title>s
+			<title>Filtered Events</title>
 			<meta name='description' content={`A list of filtered events`} />
 		</Head>
 	);
