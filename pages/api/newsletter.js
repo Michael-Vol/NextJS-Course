@@ -11,11 +11,12 @@ async function handler(req, res) {
 		}
 
 		const client = await MongoClient.connect(
-			`mongodb+srv://admin:rimdus-cuxquS-1hobro@cluster0.sq1ly.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+			`mongodb+srv://admin:rimdus-cuxquS-1hobro@cluster0.sq1ly.mongodb.net/events?retryWrites=true&w=majority`
 		);
+
 		const db = client.db();
 
-		await db.collection('emails').insertOne({ email: userEmail });
+		await db.collection('newsletter').insertOne({ email: userEmail });
 
 		client.close();
 
