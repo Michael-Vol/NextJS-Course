@@ -1,60 +1,34 @@
-import { useRef, useState } from 'react';
+import Head from 'next/head';
 
-function HomePage() {
-	const emailInputRef = useRef();
-	const feedbackInputRef = useRef();
-	const [feedback, setFeedback] = useState([]);
+import { getFeaturedEvents } from '../helpers/api-util';
+import EventList from '../components/events/event-list';
+import NewsletterRegistration from '../components/input/newsletter-registration';
 
-	function submitFormHandler(event) {
-		event.preventDefault();
+function HomePage(props) {
+  return (
+    <div>
+      <Head>
+        <title>NextJS Events</title>
+        <meta
+          name='description'
+          content='Find a lot of great events that allow you to evolve...'
+        />
+      </Head>
+      <NewsletterRegistration />
+      <EventList items={props.events} />
+    </div>
+  );
+}
 
-		const enteredEmail = emailInputRef.current.value;
-		const enteredFeedback = feedbackInputRef.current.value;
+export async function getStaticProps() {
+  const featuredEvents = await getFeaturedEvents();
 
-		const reqBody = {
-			email: enteredEmail,
-			text: enteredFeedback,
-		};
-		fetch('/api/feedback', {
-			method: 'POST',
-			body: JSON.stringify(reqBody),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((response) => response.json())
-			.then((data) => console.log(data));
-	}
-
-	function loadFeedbackHandler() {
-		fetch('/api/feedback')
-			.then((response) => response.json())
-			.then((data) => setFeedback(data.feedback));
-	}
-
-	return (
-		<div>
-			<h1>The Home Page</h1>
-			<form>
-				<div>
-					<label htmlFor='email'>Your Email Address</label>
-					<input type='email' id='email' ref={emailInputRef} />
-				</div>
-				<div>
-					<label htmlFor='feedback'>Your Feedback</label>
-					<textarea id='feedback' rows='5' ref={feedbackInputRef} />
-				</div>
-				<button onClick={submitFormHandler}>Send Feedback</button>
-			</form>
-			<button onClick={loadFeedbackHandler}>Load Feedback</button>
-
-			<ul>
-				{feedback.map((item) => (
-					<li key={item.id}>{item.text}</li>
-				))}
-			</ul>
-		</div>
-	);
+  return {
+    props: {
+      events: featuredEvents,
+    },
+    revalidate: 1800,
+  };
 }
 
 export default HomePage;
