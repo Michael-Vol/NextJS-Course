@@ -70,7 +70,7 @@ function ContactForm() {
 		notification = {
 			status: 'success',
 			title: 'Sent!',
-			message: 'Message sent successfully!',
+			message: 'Message sent successfully!!!',
 		};
 	}
 	if (requestStatus === 'error') {
