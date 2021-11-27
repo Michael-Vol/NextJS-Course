@@ -21,6 +21,7 @@ export function getStaticProps(context) {
 	const { params } = context;
 	const { slug } = params;
 
+	// const postData = getPostData(slug);
 	const postData = getPostData(slug);
 
 	return {
