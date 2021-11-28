@@ -14,7 +14,6 @@ async function handler(req, res) {
 			message: 'Invalid input - password should also be at least 7 characters long',
 		});
 	}
-
 	const client = await connectToDatabase();
 	const db = client.db();
 
