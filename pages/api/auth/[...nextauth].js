@@ -12,11 +12,10 @@ export default NextAuth({
 		Providers.Credentials({
 			async authorize(credentials) {
 				const client = await connectToDatabase();
-
-				const userCollection = client.db().collections('users');
+				const usersCollection = client.db().collection('users');
 
 				//check if user exists
-				const user = userCollection.findOne({
+				const user = await usersCollection.findOne({
 					email: credentials.email,
 				});
 
@@ -27,8 +26,7 @@ export default NextAuth({
 				}
 
 				//verify user password
-				const isVerified = await verifyPassword(user.password, credentials.password);
-
+				const isVerified = await verifyPassword(credentials.password, user.password);
 				if (!isVerified) {
 					//throw error if password is not verified
 					client.close();
