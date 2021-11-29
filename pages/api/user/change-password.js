@@ -20,7 +20,7 @@ async function handler(req, res) {
 	const oldPassword = req.body.oldPassword;
 	const newPassword = req.body.newPassword;
 
-	const usersCollection = await connectToDatabase();
+	const client = await connectToDatabase();
 
 	const usersCollection = client.db().collection('users');
 
@@ -34,9 +34,7 @@ async function handler(req, res) {
 	}
 
 	const currentPassword = user.password;
-
-	const password = verifyPassword(oldPassword, currentPassword);
-
+	const password = await verifyPassword(oldPassword, currentPassword);
 	if (!password) {
 		client.close();
 		return res.status(403).json({
@@ -44,9 +42,9 @@ async function handler(req, res) {
 		});
 	}
 
-	newPassword = await hashPassword(newPassword);
+	const newHashedPassword = await hashPassword(newPassword);
 
-	usersCollection.updateOne({ email: userEmail }, { $set: { password: newPassword } });
+	usersCollection.updateOne({ email: userEmail }, { $set: { password: newHashedPassword } });
 
 	client.close();
 	return res.status(200).json({
