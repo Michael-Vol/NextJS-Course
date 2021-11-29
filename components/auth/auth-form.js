@@ -43,7 +43,7 @@ function AuthForm() {
 				email,
 				password,
 			});
-			if (!result.error) {
+			if (!res.error) {
 				//set auth state
 			}
 		} else {
